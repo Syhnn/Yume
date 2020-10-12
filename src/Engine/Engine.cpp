@@ -18,6 +18,7 @@ Engine::Engine() :
 
 Engine::~Engine() {
   if (dm) delete dm;
+  SDL_Quit();
 }
 
 
@@ -37,7 +38,7 @@ void Engine::update() {
 
 void Engine::display() {
   dm->clear();
-  dm->renderTexture(tmp, 0, 0, 383, 501);
+  dm->renderTexture(tmp, 0, 0);
   dm->render();
 }
 
@@ -63,7 +64,7 @@ bool Engine::init() {
   }
 
   string path = "assets/culture.png";
-  tmp = dm->loadTexture(path);
+  tmp = dm->loadTexture(path, 383, 501);
   if (tmp == -1) {
     cout << "Couldn't load texture " << path << endl;
     return false;

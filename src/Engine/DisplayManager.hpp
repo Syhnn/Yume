@@ -9,7 +9,8 @@
 struct SDL_Window;
 struct SDL_Rect;
 struct SDL_Renderer;
-struct SDL_Texture;
+
+class Texture;
 
 
 const int WINDOW_WIDTH = 640;
@@ -30,14 +31,14 @@ public:
   void drawPoint(float x, float y);
   void drawLine(float x1, float y1, float x2, float y2);
 
-  int loadTexture(std::string path);
-  bool renderTexture(int id, int x, int y, int w, int h);
+  int loadTexture(std::string path, int w, int h);
+  bool renderTexture(int id, int x, int y);
 
 private:
   SDL_Window* window;
   SDL_Renderer* renderer;
 
-  std::vector<SDL_Texture*> loaded_textures;
+  std::vector<Texture*> loaded_textures;
 };
 
 #endif // _DISPLAY_MANAGER_HPP_

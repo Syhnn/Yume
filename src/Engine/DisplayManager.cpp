@@ -1,9 +1,10 @@
 #include "DisplayManager.hpp"
 
 #include <iostream>
-
 #include "SDL.h"
 #include "SDL_image.h"
+
+#include "Texture.hpp"
 
 
 using namespace std;
@@ -18,7 +19,7 @@ DisplayManager::DisplayManager() :
 
 DisplayManager::~DisplayManager() {
   SDL_DestroyWindow(window);
-  SDL_Quit();
+  IMG_Quit();
 }
 
 
@@ -74,30 +75,17 @@ void DisplayManager::drawLine(float x1, float y1, float x2, float y2) {
   SDL_RenderDrawLineF(renderer, x1, y1, x2, y2);
 }
 
-int DisplayManager::loadTexture(string path) {
-  SDL_Texture* new_texture = nullptr;
-  SDL_Surface* loaded_surface = IMG_Load(path.c_str());
-
-  if (loaded_surface == nullptr) {
-    cout << "Unable to load image " << path << " - SDL_image Error:\n" << IMG_GetError() << endl;
-    return -1;
-  } else {
-    new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
-    if (new_texture == nullptr) {
-      cout << "Unable to create texture from " << path << " - SDL Error:\n" << SDL_GetError() << endl;
-      return -1;
-    }
-    SDL_FreeSurface(loaded_surface);
-  }
+int DisplayManager::loadTexture(string path, int w, int h) {
+  Texture* t = Texture::fromImage(renderer, path, w, h);
   
-  loaded_textures.push_back(new_texture);
+  loaded_textures.push_back(t);
   return static_cast<int>(loaded_textures.size()) - 1;
 }
 
-bool DisplayManager::renderTexture(int id, int x, int y, int w, int h) {
+bool DisplayManager::renderTexture(int id, int x, int y) {
   if (id < 0 || id >= loaded_textures.size()) return false;
-  SDL_Rect r = { x, y, w, h };
-  SDL_RenderCopy(renderer, loaded_textures[id], NULL, &r);
+  SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };
+  SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), NULL, &r);
   return true;
 }
 
