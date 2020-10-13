@@ -9,7 +9,10 @@ public:
   int posx;
   int posy;
 
-  int textureId;
+  int vx;
+  int vy;
+
+  int texture_id;
 };
 
 #endif // _ENTITY_HPP_

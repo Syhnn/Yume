@@ -10,20 +10,10 @@
 using namespace std;
 
 
-void GameState::handleInputs(Engine* engine) {
-  SDL_Event e;
-
-  while (SDL_PollEvent(&e) != 0) {
-    if (e.type == SDL_QUIT) {
-      engine->exit();
-    }
-  }
-}
-
 void GameState::display(const DisplayManager* dm) {
   dm->clear();
   for (Entity* e : entities) {
-    dm->renderTexture(e->textureId, e->posx, e->posy);
+    dm->renderTexture(e->texture_id, e->posx, e->posy);
   }
 }
 

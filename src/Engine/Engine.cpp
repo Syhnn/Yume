@@ -5,6 +5,7 @@
 
 #include "DisplayManager.hpp"
 #include "GameState.hpp"
+#include "KeyBinds.hpp"
 
 
 using namespace std;
@@ -17,13 +18,16 @@ Engine::Engine() :
 
   tmp(0),
 
-  dm(nullptr)
+  dm(nullptr),
+  kb(nullptr)
 {
   dm = new DisplayManager();
+  kb = new KeyBinds();
 }
 
 Engine::~Engine() {
   if (dm) delete dm;
+  if (kb) delete kb;
   SDL_Quit();
 }
 
@@ -31,17 +35,19 @@ Engine::~Engine() {
 // Public methods
 
 void Engine::mainloop() {
-  Uint32 time;
+  uint32_t time, new_time, frame_duration;
 
   time = SDL_GetTicks();
   while (!quit) {
+    new_time = SDL_GetTicks();
+    frame_duration = new_time - time;
+    time = new_time;
+
     handleInputs();
-    update();
-    // cap at roughly 60 fps (not quite) todo: improve
-    if (SDL_GetTicks() - time > SCREEN_TICKS_PER_FRAME) {
-      display();
-      time = SDL_GetTicks();
-    }
+    update(frame_duration);
+    display();
+    
+    SDL_Delay(1);
   }
 }
 
@@ -51,7 +57,7 @@ void Engine::pushState(GameState* state) {
   }
 
   states.push_back(state);
-  state->init(dm);
+  state->init(dm, kb);
 }
 
 void Engine::popState() {
@@ -71,11 +77,12 @@ void Engine::popState() {
 }
 
 void Engine::handleInputs() {
-  states.back()->handleInputs(this);
+  kb->handleInputs(this);
+  states.back()->handleInputs(kb);
 }
 
-void Engine::update() {
-  states.back()->update();
+void Engine::update(int dt) {
+  states.back()->update(dt);
 }
 
 void Engine::display() {

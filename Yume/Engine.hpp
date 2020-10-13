@@ -6,10 +6,11 @@
 
 class DisplayManager;
 class GameState;
+class KeyBinds;
 
 
-const int SCREEN_FPS = 60;
-const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+const int FPS = 60;
+const int TICKS_PER_FRAME = 1000 / FPS;
 
 
 class Engine {
@@ -23,7 +24,7 @@ public:
   void popState();
 
   void handleInputs();
-  void update();
+  void update(int dt);
   void display();
 
   bool init();
@@ -37,6 +38,7 @@ private:
 
   // todo: smart pointers
   DisplayManager* dm;
+  KeyBinds* kb;
 
   std::vector<GameState*> states;
 };
