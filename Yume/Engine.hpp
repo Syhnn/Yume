@@ -1,12 +1,15 @@
 #ifndef _CORE_HPP_
 #define _CORE_HPP_
 
-
-const int SCREEN_FPS = 60;
-const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+#include <vector>
 
 
 class DisplayManager;
+class GameState;
+
+
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 
 class Engine {
@@ -16,11 +19,15 @@ public:
 
   void mainloop();
 
+  void pushState(GameState* state);
+  void popState();
+
   void handleInputs();
   void update();
   void display();
 
   bool init();
+  void exit();
 
 private:
   bool quit;
@@ -30,6 +37,8 @@ private:
 
   // todo: smart pointers
   DisplayManager* dm;
+
+  std::vector<GameState*> states;
 };
 
 #endif // _CORE_HPP_

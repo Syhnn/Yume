@@ -54,12 +54,12 @@ bool DisplayManager::init() {
   return true;
 }
 
-void DisplayManager::clear() {
+void DisplayManager::clear() const {
   SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
   SDL_RenderClear(renderer);
 }
 
-void DisplayManager::render() {
+void DisplayManager::render() const {
   SDL_RenderPresent(renderer);
 }
 
@@ -82,7 +82,7 @@ int DisplayManager::loadTexture(string path, int w, int h) {
   return static_cast<int>(loaded_textures.size()) - 1;
 }
 
-bool DisplayManager::renderTexture(int id, int x, int y) {
+bool DisplayManager::renderTexture(int id, int x, int y) const {
   if (id < 0 || id >= loaded_textures.size()) return false;
   SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };
   SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), NULL, &r);
