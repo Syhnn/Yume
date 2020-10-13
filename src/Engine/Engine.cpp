@@ -17,8 +17,10 @@ Engine::Engine() :
 
   tmp(0),
 
-  dm(new DisplayManager())
-{}
+  dm(nullptr)
+{
+  dm = new DisplayManager();
+}
 
 Engine::~Engine() {
   if (dm) delete dm;

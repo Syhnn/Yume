@@ -12,9 +12,12 @@ using namespace std;
 
 // Constructors and destructor
 
-DisplayManager::DisplayManager() :
+DisplayManager::DisplayManager(int width, int height) :
   window(nullptr),
-  renderer(nullptr)
+  renderer(nullptr),
+
+  WINDOW_WIDTH(width),
+  WINDOW_HEIGHT(height)
 {}
 
 DisplayManager::~DisplayManager() {
