@@ -13,13 +13,9 @@ struct SDL_Renderer;
 class Texture;
 
 
-const int WINDOW_WIDTH = 640;
-const int WINDOW_HEIGHT = 480;
-
-
 class DisplayManager {
 public:
-  DisplayManager();
+  DisplayManager(int width = 1024, int height = 768);
   ~DisplayManager();
 
   bool init();
@@ -32,7 +28,13 @@ public:
   void drawLine(float x1, float y1, float x2, float y2);
 
   int loadTexture(std::string path, int w, int h);
-  bool renderTexture(int id, int x, int y) const;
+  void renderTexture(int id, int x, int y) const;
+  void renderClip(int id, int x, int y, int clip) const;
+
+  void addTextureClip(int id, int x, int y, int w, int h);
+
+  const int WINDOW_WIDTH;
+  const int WINDOW_HEIGHT;
 
 private:
   SDL_Window* window;

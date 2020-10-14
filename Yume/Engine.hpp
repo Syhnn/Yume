@@ -10,7 +10,7 @@ class KeyBinds;
 
 
 const int FPS = 60;
-const int TICKS_PER_FRAME = 1000 / FPS;
+const int MS_PER_FRAME = 1000 / FPS;
 
 
 class Engine {
@@ -24,8 +24,8 @@ public:
   void popState();
 
   void handleInputs();
-  void update(int dt);
-  void display();
+  void update(const int dt);
+  void display(const int dt);
 
   bool init();
   void exit();

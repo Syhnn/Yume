@@ -10,10 +10,15 @@
 using namespace std;
 
 
-void GameState::display(const DisplayManager* dm) {
+void GameState::display(const DisplayManager* dm, const int dt) {
   dm->clear();
   for (Entity* e : entities) {
-    dm->renderTexture(e->texture_id, e->posx, e->posy);
+    int clip = e->getClipId(dt);
+    if (clip == -1) {
+      dm->renderTexture(e->texture_id, e->posx, e->posy);
+    } else {
+      dm->renderClip(e->texture_id, e->posx, e->posy, clip);
+    }
   }
 }
 

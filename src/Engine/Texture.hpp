@@ -3,8 +3,10 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 
 
+struct SDL_Rect;
 struct SDL_Renderer;
 struct SDL_Texture;
 
@@ -22,11 +24,16 @@ public:
 
   static Texture* fromImage(SDL_Renderer* r, std::string path, int w, int h);
 
+  int addClip(int x, int y, int w, int h);
+  const SDL_Rect* getClip(int id);
+
 private:
   SDL_Texture* texture;
 
   int width;
   int height;
+
+  std::vector<SDL_Rect*> clips;
 };
 
 #endif // _TEXTURE_HPP_

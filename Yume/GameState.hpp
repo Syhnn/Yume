@@ -19,8 +19,8 @@ public:
   virtual void resume() {};
 
   virtual void handleInputs(KeyBinds* kb) = 0;
-  virtual void update(int dt) = 0;
-  virtual void display(const DisplayManager* dm);
+  virtual void update(const int dt) = 0;
+  virtual void display(const DisplayManager* dm, const int dt);
 
   void addEntity(Entity* e);
   void removeEntity(Entity* e);

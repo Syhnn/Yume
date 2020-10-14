@@ -14,9 +14,11 @@ Entity::Entity() :
   texture_id(-1)
 {}
 
-// Puiblic methods
+// Public methods
 
-//
+int Entity::getClipId(const int dt) {
+  return -1;
+}
 
 
 // Private methods

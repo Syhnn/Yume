@@ -45,7 +45,7 @@ void Engine::mainloop() {
 
     handleInputs();
     update(frame_duration);
-    display();
+    display(frame_duration);
     
     SDL_Delay(1);
   }
@@ -81,12 +81,12 @@ void Engine::handleInputs() {
   states.back()->handleInputs(kb);
 }
 
-void Engine::update(int dt) {
+void Engine::update(const int dt) {
   states.back()->update(dt);
 }
 
-void Engine::display() {
-  states.back()->display(dm);
+void Engine::display(const int dt) {
+  states.back()->display(dm, dt);
 }
 
 bool Engine::init() {

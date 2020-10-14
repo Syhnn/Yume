@@ -6,6 +6,8 @@ class Entity {
 public:
   Entity();
 
+  virtual int getClipId(const int dt);
+
   int posx;
   int posy;
 

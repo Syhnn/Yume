@@ -34,7 +34,7 @@ bool DisplayManager::init() {
     return false;
   }
 
-  window = SDL_CreateWindow("3D Projection", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Yume Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
   if (window == nullptr) {
     cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl; 
     return false;
@@ -85,11 +85,24 @@ int DisplayManager::loadTexture(string path, int w, int h) {
   return static_cast<int>(loaded_textures.size()) - 1;
 }
 
-bool DisplayManager::renderTexture(int id, int x, int y) const {
-  if (id < 0 || id >= loaded_textures.size()) return false;
-  SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };
-  SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), NULL, &r);
-  return true;
+void DisplayManager::renderTexture(int id, int x, int y) const {
+  if (id >= 0 && id < loaded_textures.size()) {
+    SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };
+    SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), NULL, &r);
+  }
+}
+
+void DisplayManager::renderClip(int id, int x, int y, int clip) const {
+  if (id >= 0 && id < loaded_textures.size()) {
+    SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };
+    SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), loaded_textures[id]->getClip(clip), &r);
+  }
+}
+
+void DisplayManager::addTextureClip(int id, int x, int y, int w, int h) {
+  if (id >= 0 && id < loaded_textures.size()) {
+    loaded_textures[id]->addClip(x, y, w, h);
+  }
 }
 
 

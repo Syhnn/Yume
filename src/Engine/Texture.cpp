@@ -27,6 +27,10 @@ Texture::~Texture() {
 void Texture::free() {
   SDL_DestroyTexture(texture);
   texture = nullptr;
+  for (int i(0); i < clips.size(); ++i) {
+    delete clips[i];
+  }
+  clips.clear();
 }
 
 SDL_Texture* Texture::getRawTexture() const {
@@ -58,6 +62,16 @@ Texture* Texture::fromImage(SDL_Renderer* r, std::string path, int w, int h) {
 
   Texture* tp = new Texture(new_texture, w, h);
   return tp;
+}
+
+int Texture::addClip(int x, int y, int w, int h) {
+  clips.push_back(new SDL_Rect({x, y, w, h}));
+  return static_cast<int>(clips.size()) - 1;
+}
+
+const SDL_Rect* Texture::getClip(int id) {
+  if (id < clips.size() && id >= 0) return clips[id];
+  else return nullptr;
 }
 
 // Private Methods
