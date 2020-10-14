@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 #include "Texture.hpp"
 
@@ -17,7 +18,9 @@ DisplayManager::DisplayManager(int width, int height) :
   renderer(nullptr),
 
   WINDOW_WIDTH(width),
-  WINDOW_HEIGHT(height)
+  WINDOW_HEIGHT(height),
+
+  font(nullptr)
 {}
 
 DisplayManager::~DisplayManager() {
@@ -53,6 +56,17 @@ bool DisplayManager::init() {
     cout << "SDL_image could not initialize - SDL_image Error:\n" << IMG_GetError() << endl;
     return false;
   }
+
+  if (TTF_Init() == -1) {
+    cout << "SDL_ttf could not initialize! SDL_ttf Error:\n" << TTF_GetError() << endl;
+    return false;
+  }
+
+  font = TTF_OpenFont("assets/monogram_extended.ttf", 32);
+  if (font == nullptr) {
+    cout << "Failed to load monogram font! SDL_ttf Error\n" << TTF_GetError() << endl;
+    return false;
+  }
   
   return true;
 }
@@ -81,8 +95,13 @@ void DisplayManager::drawLine(float x1, float y1, float x2, float y2) {
 int DisplayManager::loadTexture(string path, int w, int h) {
   Texture* t = Texture::fromImage(renderer, path, w, h);
   
-  loaded_textures.push_back(t);
-  return static_cast<int>(loaded_textures.size()) - 1;
+  if (t) {
+    loaded_textures.push_back(t);
+    return static_cast<int>(loaded_textures.size()) - 1;
+  } else {
+    cout << "Couldn't create Texture object" << endl;
+    return -1;
+  }
 }
 
 void DisplayManager::renderTexture(int id, int x, int y) const {
@@ -96,6 +115,18 @@ void DisplayManager::renderClip(int id, int x, int y, int clip) const {
   if (id >= 0 && id < loaded_textures.size()) {
     SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };
     SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), loaded_textures[id]->getClip(clip), &r);
+  }
+}
+
+int DisplayManager::loadText(string text) {
+  Texture* t = Texture::fromTTF(renderer, font, text);
+
+  if (t) {
+    loaded_textures.push_back(t);
+    return static_cast<int>(loaded_textures.size()) - 1;
+  } else {
+    cout << "Couldn't create Texture object" << endl;
+    return -1;
   }
 }
 

@@ -10,6 +10,9 @@ struct SDL_Window;
 struct SDL_Rect;
 struct SDL_Renderer;
 
+struct _TTF_Font;
+typedef struct _TTF_Font TTF_Font;
+
 class Texture;
 
 
@@ -31,6 +34,8 @@ public:
   void renderTexture(int id, int x, int y) const;
   void renderClip(int id, int x, int y, int clip) const;
 
+  int loadText(std::string text);
+
   void addTextureClip(int id, int x, int y, int w, int h);
 
   const int WINDOW_WIDTH;
@@ -41,6 +46,8 @@ private:
   SDL_Renderer* renderer;
 
   std::vector<Texture*> loaded_textures;
+
+  TTF_Font* font;
 };
 
 #endif // _DISPLAY_MANAGER_HPP_

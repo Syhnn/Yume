@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 
 using namespace std;
@@ -14,7 +15,9 @@ Texture::Texture(SDL_Texture* t, int w, int h) :
   texture(t),
 
   width(w),
-  height(h)
+  height(h),
+
+  color(nullptr)
 {}
 
 Texture::~Texture() {
@@ -44,7 +47,11 @@ int Texture::getHeight() const {
   return height;
 }
 
-Texture* Texture::fromImage(SDL_Renderer* r, std::string path, int w, int h) {
+void Texture::setColor(SDL_Color* c) {
+  color = c;
+}
+
+Texture* Texture::fromImage(SDL_Renderer* r, string path, int w, int h) {
   SDL_Texture* new_texture = nullptr;
   SDL_Surface* loaded_surface = IMG_Load(path.c_str());
 
@@ -62,6 +69,37 @@ Texture* Texture::fromImage(SDL_Renderer* r, std::string path, int w, int h) {
 
   Texture* tp = new Texture(new_texture, w, h);
   return tp;
+}
+
+Texture* Texture::fromTTF(SDL_Renderer* r, TTF_Font* f, string text) {
+  Texture* tp = new Texture(nullptr, 0, 0);
+  tp->setColor(new SDL_Color({ 0, 0, 0 }));
+  if (!tp->loadFromText(r, f, text)) {
+    cout << "Failed to render text texture!\n" << endl;
+  }
+
+  return tp;
+}
+
+bool Texture::loadFromText(SDL_Renderer* r, TTF_Font* f, string text) {
+  free();
+
+  SDL_Surface* textSurface = TTF_RenderText_Solid(f, text.c_str(), *color);
+  if (textSurface == nullptr) {
+    cout << "Unable to render text surface! SDL_ttf Error:\n" << TTF_GetError() << endl;
+  } else {
+    texture = SDL_CreateTextureFromSurface(r, textSurface);
+    if (texture == nullptr) {
+      cout << "Unable to create texture from rendered text! SDL Error:\n" << SDL_GetError() << endl;
+    } else {
+      width = textSurface->w;
+      height = textSurface->h;
+    }
+
+    SDL_FreeSurface(textSurface);
+  }
+
+  return texture != nullptr;
 }
 
 int Texture::addClip(int x, int y, int w, int h) {

@@ -20,6 +20,7 @@ void GameState::display(const DisplayManager* dm, const int dt) {
       dm->renderClip(e->texture_id, e->posx, e->posy, clip);
     }
   }
+
 }
 
 void GameState::addEntity(Entity* e) {
