@@ -6,7 +6,6 @@
 
 class DisplayManager;
 class GameState;
-class KeyBinds;
 
 
 const int FPS = 60;
@@ -33,12 +32,8 @@ public:
 private:
   bool quit;
 
-  // to be deleted - test variable
-  int tmp;
-
   // todo: smart pointers
   DisplayManager* dm;
-  KeyBinds* kb;
 
   std::vector<GameState*> states;
 };

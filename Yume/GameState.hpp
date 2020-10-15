@@ -12,13 +12,16 @@ class KeyBinds;
 
 class GameState {
 public:
-  virtual void init(DisplayManager* dm, KeyBinds* kb) = 0;
+  GameState();
+  ~GameState();
+
+  virtual void init(DisplayManager* dm) = 0;
   virtual void cleanUp() = 0;
 
   virtual void pause() {};
   virtual void resume() {};
 
-  virtual void handleInputs(KeyBinds* kb) = 0;
+  virtual void handleInputs(Engine* engine);
   virtual void update(const int dt) = 0;
   virtual void display(const DisplayManager* dm, const int dt);
 
@@ -27,6 +30,9 @@ public:
 
   // figure this out
   //virtual void changeState(Engine* engine, GameState* state) = 0;
+
+protected:
+  KeyBinds* kb;
 
 private:
   std::set<Entity*> entities;

@@ -5,10 +5,29 @@
 #include "DisplayManager.hpp"
 #include "Engine.hpp"
 #include "Entity.hpp"
+#include "KeyBinds.hpp"
 
 
 using namespace std;
 
+
+GameState::GameState() :
+  kb(nullptr)
+{
+  kb = new KeyBinds();
+}
+
+GameState::~GameState() {
+  if (kb) {
+    delete kb;
+    kb = nullptr;
+  }
+}
+
+
+void GameState::handleInputs(Engine* engine) {
+  kb->handleInputs(engine);
+}
 
 void GameState::display(const DisplayManager* dm, const int dt) {
   dm->clear();

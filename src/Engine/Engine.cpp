@@ -16,18 +16,17 @@ using namespace std;
 Engine::Engine() :
   quit(false),
 
-  tmp(0),
-
-  dm(nullptr),
-  kb(nullptr)
+  dm(nullptr)
 {
   dm = new DisplayManager();
-  kb = new KeyBinds();
 }
 
 Engine::~Engine() {
-  if (dm) delete dm;
-  if (kb) delete kb;
+  if (dm) {
+    delete dm;
+    dm = nullptr;
+  }
+
   SDL_Quit();
 }
 
@@ -57,7 +56,7 @@ void Engine::pushState(GameState* state) {
   }
 
   states.push_back(state);
-  state->init(dm, kb);
+  state->init(dm);
 }
 
 void Engine::popState() {
@@ -77,8 +76,7 @@ void Engine::popState() {
 }
 
 void Engine::handleInputs() {
-  kb->handleInputs(this);
-  states.back()->handleInputs(kb);
+  states.back()->handleInputs(this);
 }
 
 void Engine::update(const int dt) {
