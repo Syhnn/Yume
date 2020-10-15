@@ -15,7 +15,7 @@ public:
   GameState();
   ~GameState();
 
-  virtual void init(DisplayManager* dm) = 0;
+  virtual void init(Engine* e, DisplayManager* dm) = 0;
   virtual void cleanUp() = 0;
 
   virtual void pause() {};

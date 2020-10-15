@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SDL.h"
 
+#include "Command.hpp"
 #include "Engine.hpp"
 
 
@@ -27,7 +28,7 @@ void KeyBinds::handleInputs(Engine* engine) {
       if (k >= SDLK_a && k <= SDLK_z) {
         int command = k - SDLK_a;
         if (commands_down.find(command) != commands_down.end()) {
-          kp.push_back(commands_down[command]);
+          commands_down[command]->callback();
         }
       }
     } else if (e.type == SDL_KEYUP && !e.key.repeat) {
@@ -35,33 +36,23 @@ void KeyBinds::handleInputs(Engine* engine) {
       if (k >= SDLK_a && k <= SDLK_z) {
         int command = k - SDLK_a;
         if (commands_up.find(command) != commands_up.end()) {
-          kp.push_back(commands_up[command]);
+          commands_up[command]->callback();
         }
       }
     }
   }
 }
 
-void KeyBinds::bindKeyUp(Key k, int command_id) {
-  if (commands_up.find(k) == commands_up.end()) {
-    commands_up[k] = command_id;
-  }
+void KeyBinds::bindKeyUp(Key k, Command* c) {
+  commands_up[k] = c;
 }
 
-void KeyBinds::bindKeyDown(Key k, int command_id) {
-  if (commands_down.find(k) == commands_down.end()) {
-    commands_down[k] = command_id;
-  }
+void KeyBinds::bindKeyDown(Key k, Command* c) {
+  commands_down[k] = c;
 }
 
 void KeyBinds::unbind(int k) {
   commands_down.erase(k);
-}
-
-std::vector<int> KeyBinds::getEvents() {
-  vector<int> events = kp; // disgusting
-  kp = vector<int>();
-  return events;
 }
 
 

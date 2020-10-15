@@ -56,7 +56,7 @@ void Engine::pushState(GameState* state) {
   }
 
   states.push_back(state);
-  state->init(dm);
+  state->init(this, dm);
 }
 
 void Engine::popState() {

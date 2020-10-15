@@ -6,6 +6,7 @@
 #include <vector>
 
 
+class Command;
 class Engine;
 
 
@@ -18,15 +19,14 @@ class KeyBinds {
 public:
   void handleInputs(Engine* engine);
 
-  void bindKeyDown(Key k, int command_id);
-  void bindKeyUp(Key k, int command_id);
+  void bindKeyDown(Key k, Command* c);
+  void bindKeyUp(Key k, Command* c);
   void unbind(int k);
-  std::vector<int> getEvents();
 
 private:
   std::vector<int> kp;
-  std::map<int, int> commands_up;
-  std::map<int, int> commands_down;
+  std::map<int, Command*> commands_up;
+  std::map<int, Command*> commands_down;
 };
 
 #endif // _KEY_BINDS_HPP_
