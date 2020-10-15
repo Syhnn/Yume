@@ -46,6 +46,10 @@ void Engine::mainloop() {
     update(frame_duration);
     display(frame_duration);
     
+    // todo: this is a quick fix
+    // since Yume is very early in its development
+    // a mainloop iteration is often less than 1ms, which causes issues
+    // later i should be able to remove this or just use another type of mainloop
     SDL_Delay(1);
   }
 }

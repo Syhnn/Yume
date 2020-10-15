@@ -3,7 +3,6 @@
 #include <iostream>
 #include "SDL.h"
 
-#include "Command.hpp"
 #include "Engine.hpp"
 
 
@@ -43,12 +42,12 @@ void KeyBinds::handleInputs(Engine* engine) {
   }
 }
 
-void KeyBinds::bindKeyUp(Key k, Command* c) {
-  commands_up[k] = c;
+void KeyBinds::bindKeyUp(Key k, KeyBind* b) {
+  commands_up[k] = b;
 }
 
-void KeyBinds::bindKeyDown(Key k, Command* c) {
-  commands_down[k] = c;
+void KeyBinds::bindKeyDown(Key k, KeyBind* b) {
+  commands_down[k] = b;
 }
 
 void KeyBinds::unbind(int k) {

@@ -5,8 +5,9 @@
 #include <string>
 #include <vector>
 
+#include "KeyBind.hpp"
 
-class Command;
+
 class Engine;
 
 
@@ -19,14 +20,14 @@ class KeyBinds {
 public:
   void handleInputs(Engine* engine);
 
-  void bindKeyDown(Key k, Command* c);
-  void bindKeyUp(Key k, Command* c);
+  void bindKeyDown(Key k, KeyBind* b);
+  void bindKeyUp(Key k, KeyBind* b);
   void unbind(int k);
 
 private:
   std::vector<int> kp;
-  std::map<int, Command*> commands_up;
-  std::map<int, Command*> commands_down;
+  std::map<int, KeyBind*> commands_up;
+  std::map<int, KeyBind*> commands_down;
 };
 
 #endif // _KEY_BINDS_HPP_

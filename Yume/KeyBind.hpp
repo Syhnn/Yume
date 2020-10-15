@@ -2,7 +2,7 @@
 #define _COMMAND_HPP_
 
 
-class Command {
+class KeyBind {
 public:
   virtual void callback() = 0;
 
