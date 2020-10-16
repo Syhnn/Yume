@@ -11,6 +11,8 @@
 using namespace std;
 
 
+// Constructors and destructor
+
 GameState::GameState() :
   kb(nullptr)
 {
@@ -24,6 +26,8 @@ GameState::~GameState() {
   }
 }
 
+
+// Public methods
 
 void GameState::handleInputs(Engine* engine) {
   kb->handleInputs(engine);

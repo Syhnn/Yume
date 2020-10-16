@@ -28,9 +28,6 @@ public:
   void addEntity(Entity* e);
   void removeEntity(Entity* e);
 
-  // figure this out
-  //virtual void changeState(Engine* engine, GameState* state) = 0;
-
 protected:
   KeyBinds* kb;
 

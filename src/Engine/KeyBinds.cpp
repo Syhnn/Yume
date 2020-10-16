@@ -9,11 +9,6 @@
 using namespace std;
 
 
-// Constructors and destructor
-
-//
-
-
 // Public methods
 
 void KeyBinds::handleInputs(Engine* engine) {
@@ -53,8 +48,3 @@ void KeyBinds::bindKeyDown(Key k, KeyBind* b) {
 void KeyBinds::unbind(int k) {
   commands_down.erase(k);
 }
-
-
-// Private methods
-
-//

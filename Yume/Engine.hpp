@@ -32,7 +32,6 @@ public:
 private:
   bool quit;
 
-  // todo: smart pointers
   DisplayManager* dm;
 
   std::vector<GameState*> states;

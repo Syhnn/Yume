@@ -5,9 +5,6 @@
 class KeyBind {
 public:
   virtual void callback() = 0;
-
-private:
-  //
 };
 
 #endif // _COMMAND_HPP_
