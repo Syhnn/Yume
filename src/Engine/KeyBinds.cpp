@@ -22,7 +22,7 @@ void KeyBinds::handleInputs(Engine* engine) {
       if (k >= SDLK_a && k <= SDLK_z) {
         int command = k - SDLK_a;
         if (commands_down.find(command) != commands_down.end()) {
-          commands_down[command]->callback();
+          commands_down[command]();
         }
       }
     } else if (e.type == SDL_KEYUP && !e.key.repeat) {
@@ -30,19 +30,19 @@ void KeyBinds::handleInputs(Engine* engine) {
       if (k >= SDLK_a && k <= SDLK_z) {
         int command = k - SDLK_a;
         if (commands_up.find(command) != commands_up.end()) {
-          commands_up[command]->callback();
+          commands_up[command]();
         }
       }
     }
   }
 }
 
-void KeyBinds::bindKeyUp(Key k, KeyBind* b) {
-  commands_up[k] = b;
+void KeyBinds::bindKeyUp(Key k, cfunc f) {
+  commands_up[k] = f;
 }
 
-void KeyBinds::bindKeyDown(Key k, KeyBind* b) {
-  commands_down[k] = b;
+void KeyBinds::bindKeyDown(Key k, cfunc f) {
+  commands_down[k] = f;
 }
 
 void KeyBinds::unbind(int k) {
