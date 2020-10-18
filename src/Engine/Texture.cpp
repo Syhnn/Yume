@@ -73,7 +73,7 @@ Texture* Texture::fromImage(SDL_Renderer* r, string path, int w, int h) {
 
 Texture* Texture::fromTTF(SDL_Renderer* r, TTF_Font* f, string text) {
   Texture* tp = new Texture(nullptr, 0, 0);
-  tp->setColor(new SDL_Color({ 0, 0, 0 }));
+  tp->setColor(new SDL_Color({ 0xff, 0xff, 0xff }));
   if (!tp->loadFromText(r, f, text)) {
     cout << "Failed to render text texture!\n" << endl;
   }
@@ -110,6 +110,10 @@ int Texture::addClip(int x, int y, int w, int h) {
 const SDL_Rect* Texture::getClip(int id) {
   if (id < clips.size() && id >= 0) return clips[id];
   else return nullptr;
+}
+
+int Texture::getClipCount() const {
+  return static_cast<int>(clips.size());
 }
 
 // Private Methods

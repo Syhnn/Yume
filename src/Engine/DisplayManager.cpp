@@ -6,6 +6,7 @@
 #include "SDL_ttf.h"
 
 #include "Texture.hpp"
+#include "TileMap.hpp"
 
 
 using namespace std;
@@ -14,6 +15,10 @@ using namespace std;
 // Constructors and destructor
 
 DisplayManager::DisplayManager(int width, int height) :
+  cr(0x00),
+  cg(0x00),
+  cb(0x00),
+
   window(nullptr),
   renderer(nullptr),
 
@@ -72,7 +77,7 @@ bool DisplayManager::init() {
 }
 
 void DisplayManager::clear() const {
-  SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
+  SDL_SetRenderDrawColor(renderer, cr, cg, cb, 0xff);
   SDL_RenderClear(renderer);
 }
 
@@ -82,6 +87,12 @@ void DisplayManager::render() const {
 
 void DisplayManager::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
   SDL_SetRenderDrawColor(renderer, r, g, b, a);
+}
+
+void DisplayManager::setClearColor(uint8_t r, uint8_t g, uint8_t b) {
+  cr = r;
+  cg = g;
+  cb = b;
 }
 
 void DisplayManager::drawPoint(float x, float y) {
@@ -118,6 +129,20 @@ void DisplayManager::renderClip(int id, int x, int y, int clip) const {
   }
 }
 
+void DisplayManager::renderTileMap(int id, int x, int y, const TileMap* const t) const {
+  if (id >= 0 && id < loaded_textures.size()) {
+    int tile_size = t->getTileSize();
+    for (int j(0); j < t->getHeight(); ++j) {
+      for (int i(0); i < t->getWidth(); ++i) {
+        int clip = t->getClip(i, j);
+        if (clip == -1) continue;
+        SDL_Rect r = { x + i * tile_size, y + j * tile_size, tile_size, tile_size };
+        SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), loaded_textures[id]->getClip(clip), &r);
+      }
+    }
+  }
+}
+
 int DisplayManager::loadText(string text) {
   Texture* t = Texture::fromTTF(renderer, font, text);
 
@@ -130,10 +155,11 @@ int DisplayManager::loadText(string text) {
   }
 }
 
-void DisplayManager::addTextureClip(int id, int x, int y, int w, int h) {
+int DisplayManager::addTextureClip(int id, int x, int y, int w, int h) {
   if (id >= 0 && id < loaded_textures.size()) {
-    loaded_textures[id]->addClip(x, y, w, h);
+    return loaded_textures[id]->addClip(x, y, w, h);
   }
+  return -1;
 }
 
 

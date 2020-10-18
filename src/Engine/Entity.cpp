@@ -9,8 +9,6 @@ using namespace std;
 Entity::Entity() :
   posx(0),
   posy(0),
-  vx(0),
-  vy(0),
   texture_id(-1)
 {}
 

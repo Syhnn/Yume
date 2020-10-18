@@ -35,6 +35,7 @@ public:
 
   int addClip(int x, int y, int w, int h);
   const SDL_Rect* getClip(int id);
+  int getClipCount() const;
 
 private:
   SDL_Texture* texture;

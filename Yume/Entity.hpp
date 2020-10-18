@@ -11,9 +11,6 @@ public:
   int posx;
   int posy;
 
-  int vx;
-  int vy;
-
   int texture_id;
 };
 
