@@ -14,6 +14,8 @@ TileMap::TileMap(int w, int h, int s, vector<vector<int>> g) :
 
   tile_size(s),
 
+  fixed_texture_id(-1),
+
   grid(g)
 {}
 

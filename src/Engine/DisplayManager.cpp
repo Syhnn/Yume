@@ -115,6 +115,35 @@ int DisplayManager::loadTexture(string path, int w, int h) {
   }
 }
 
+int DisplayManager::createTextureFromTilemap(TileMap* const t) {
+  int id = t->texture_id;
+  if (id < 0 || id >= loaded_textures.size()) return -1;
+
+  SDL_Texture* sdl_tex = SDL_CreateTexture(
+    renderer,
+    SDL_PIXELFORMAT_ABGR8888,
+    SDL_TEXTUREACCESS_TARGET,
+    t->getWidth() * t->getTileSize(),
+    t->getHeight() * t->getTileSize());
+  // todo: set blend mode here ?
+  SDL_SetRenderTarget(renderer, sdl_tex);
+  clear();
+  int tile_size = t->getTileSize();
+  for (int i(0); i < t->getWidth(); ++i) {
+    for (int j(0); j < t->getHeight(); ++j) {
+      SDL_Rect location = { i * tile_size, j * tile_size, tile_size, tile_size };
+      const SDL_Rect* clip = loaded_textures[id]->getClip(t->getClip(i, j));
+      SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), clip, &location);
+    }
+  }
+  SDL_SetRenderTarget(renderer, nullptr);
+  Texture* tex = new Texture(sdl_tex, t->getWidth() * t-> getTileSize(), t->getHeight() * t->getTileSize());
+  loaded_textures.push_back(tex);
+  int fti = static_cast<int>(loaded_textures.size()) - 1;
+  t->fixed_texture_id = fti;
+  return fti;
+}
+
 void DisplayManager::renderTexture(int id, int x, int y) const {
   if (id >= 0 && id < loaded_textures.size()) {
     SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };

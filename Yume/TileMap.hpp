@@ -16,6 +16,9 @@ public:
 
   int getClip(int x, int y) const;
 
+
+  int fixed_texture_id;
+
 private:
   int width;
   int height;

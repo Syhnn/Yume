@@ -33,6 +33,7 @@ public:
   void drawLine(float x1, float y1, float x2, float y2);
 
   int loadTexture(std::string path, int w, int h);
+  int createTextureFromTilemap(TileMap* const t);
   void renderTexture(int id, int x, int y) const;
   void renderClip(int id, int x, int y, int clip) const;
   void renderTileMap(int id, int x, int y, const TileMap* const t) const;
