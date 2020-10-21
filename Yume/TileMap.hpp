@@ -14,6 +14,8 @@ public:
   int getHeight() const;
   int getTileSize() const;
 
+  void setTileSize(int size);
+
   int getClip(int x, int y) const;
 
 

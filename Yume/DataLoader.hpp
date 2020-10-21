@@ -5,11 +5,14 @@
 
 
 class DataMap;
+class DisplayManager;
+class TileMap;
 
 
 class DataLoader {
 public:
-  static DataMap* fromJSON(std::string path);
+  static int initTextureFromTileset(DisplayManager* dm, std::string path);
+  static TileMap* initTileMapFromJSON(std::string path, int id);
 
 private:
   //

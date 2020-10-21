@@ -34,6 +34,10 @@ int TileMap::getTileSize() const {
   return tile_size;
 }
 
+void TileMap::setTileSize(int size) {
+  tile_size = size;
+}
+
 int TileMap::getClip(int x, int y) const {
   if (x >= 0 && x < width && y >= 0 && y < height) {
     return grid[y][x];
