@@ -18,11 +18,11 @@ public:
   virtual void init(Engine* e, DisplayManager* dm) = 0;
   virtual void cleanUp() = 0;
 
-  virtual void pause() {};
-  virtual void resume() {};
+  virtual void pause() {}
+  virtual void resume() {}
 
   virtual void handleInputs(Engine* engine);
-  virtual void update(const int dt) = 0;
+  virtual void update(const int dt) {}
   virtual void display(const DisplayManager* dm, const int dt);
 
   void addEntity(Entity* e);
