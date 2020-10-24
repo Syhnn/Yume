@@ -23,7 +23,7 @@ public:
 
   virtual void handleInputs(Engine* engine);
   virtual void update(const int dt) {}
-  virtual void display(const DisplayManager* dm, const int dt);
+  virtual void display(DisplayManager* const dm, const int dt);
 
   void addEntity(Entity* e);
   void removeEntity(Entity* e);

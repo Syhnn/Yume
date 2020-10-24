@@ -27,10 +27,10 @@ public:
   void clear() const;
   void render() const;
 
-  void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xff);
+  void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xff) const;
   void setClearColor(uint8_t r, uint8_t g, uint8_t b);
-  void drawPoint(float x, float y);
-  void drawLine(float x1, float y1, float x2, float y2);
+  void drawPoint(float x, float y) const;
+  void drawLine(float x1, float y1, float x2, float y2) const;
 
   int loadTexture(std::string path, int w, int h);
   int createTextureFromTilemap(TileMap* const t);

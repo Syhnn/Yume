@@ -85,7 +85,7 @@ void DisplayManager::render() const {
   SDL_RenderPresent(renderer);
 }
 
-void DisplayManager::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+void DisplayManager::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) const {
   SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
@@ -95,11 +95,11 @@ void DisplayManager::setClearColor(uint8_t r, uint8_t g, uint8_t b) {
   cb = b;
 }
 
-void DisplayManager::drawPoint(float x, float y) {
+void DisplayManager::drawPoint(float x, float y) const {
   SDL_RenderDrawPointF(renderer, x, y);
 }
 
-void DisplayManager::drawLine(float x1, float y1, float x2, float y2) {
+void DisplayManager::drawLine(float x1, float y1, float x2, float y2) const {
   SDL_RenderDrawLineF(renderer, x1, y1, x2, y2);
 }
 

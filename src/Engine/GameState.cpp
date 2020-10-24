@@ -33,7 +33,7 @@ void GameState::handleInputs(Engine* engine) {
   kb->handleInputs(engine);
 }
 
-void GameState::display(const DisplayManager* dm, const int dt) {
+void GameState::display(DisplayManager* const dm, const int dt) {
   dm->clear();
   for (Entity* e : entities) {
     int clip = e->getClipId(dt);
