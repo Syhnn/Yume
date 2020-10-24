@@ -144,6 +144,25 @@ int DisplayManager::createTextureFromTilemap(TileMap* const t) {
   return fti;
 }
 
+void DisplayManager::initiateTextureCreation(int w, int h) {
+  if (buffer_texture) {
+    delete buffer_texture;
+    buffer_texture = nullptr;
+  }
+
+  SDL_Texture* sdl_tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_TARGET, w, h);
+  SDL_SetRenderTarget(renderer, sdl_tex);
+  clear();
+
+  buffer_texture = new Texture(sdl_tex, w, h);
+}
+
+int DisplayManager::finalizeTexture() {
+  SDL_SetRenderTarget(renderer, nullptr);
+  loaded_textures.push_back(buffer_texture);
+  return static_cast<int>(loaded_textures.size()) - 1;
+}
+
 void DisplayManager::renderTexture(int id, int x, int y) const {
   if (id >= 0 && id < loaded_textures.size()) {
     SDL_Rect r = { x, y, loaded_textures[id]->getWidth(), loaded_textures[id]->getHeight() };

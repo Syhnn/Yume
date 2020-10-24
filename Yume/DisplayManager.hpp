@@ -34,6 +34,8 @@ public:
 
   int loadTexture(std::string path, int w, int h);
   int createTextureFromTilemap(TileMap* const t);
+  void initiateTextureCreation(int w, int h);
+  int finalizeTexture();
   void renderTexture(int id, int x, int y) const;
   void renderClip(int id, int x, int y, int clip) const;
   void renderTileMap(int id, int x, int y, const TileMap* const t) const;
@@ -52,6 +54,7 @@ private:
 
   SDL_Window* window;
   SDL_Renderer* renderer;
+  Texture* buffer_texture;
 
   std::vector<Texture*> loaded_textures;
 
