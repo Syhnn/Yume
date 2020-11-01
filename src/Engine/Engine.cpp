@@ -104,6 +104,15 @@ void Engine::exit() {
   quit = true;
 }
 
+bool Engine::loadTextComponent(string path) {
+  if (!dm->initText(path)) {
+    cout << "Error : display manager couldn't initialize text component" << endl;
+    return false;
+  }
+
+  return true;
+}
+
 
 // Private methods
 

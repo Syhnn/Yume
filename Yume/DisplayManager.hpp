@@ -23,6 +23,7 @@ public:
   ~DisplayManager();
 
   bool init();
+  bool initText(std::string path);
 
   void clear() const;
   void render() const;

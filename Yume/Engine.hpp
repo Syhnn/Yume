@@ -1,6 +1,7 @@
 #ifndef _CORE_HPP_
 #define _CORE_HPP_
 
+#include <string>
 #include <vector>
 
 
@@ -28,6 +29,8 @@ public:
 
   bool init();
   void exit();
+
+  bool loadTextComponent(std::string path);
 
 private:
   bool quit;

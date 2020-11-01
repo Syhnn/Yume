@@ -61,18 +61,22 @@ bool DisplayManager::init() {
     cout << "SDL_image could not initialize - SDL_image Error:\n" << IMG_GetError() << endl;
     return false;
   }
+  
+  return true;
+}
 
+bool DisplayManager::initText(string path) {
   if (TTF_Init() == -1) {
     cout << "SDL_ttf could not initialize! SDL_ttf Error:\n" << TTF_GetError() << endl;
     return false;
   }
 
-  font = TTF_OpenFont("assets/monogram_extended.ttf", 32);
+  font = TTF_OpenFont(path.c_str(), 32);
   if (font == nullptr) {
-    cout << "Failed to load monogram font! SDL_ttf Error\n" << TTF_GetError() << endl;
+    cout << "Failed to load font at path : " << path << "\nSDL_ttf Error :\n" << TTF_GetError() << endl;
     return false;
   }
-  
+
   return true;
 }
 
