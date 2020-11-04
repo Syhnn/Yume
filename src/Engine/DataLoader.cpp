@@ -131,3 +131,42 @@ TileMap* DataLoader::initTileMapFromJSON(std::string path, int id) {
   TileMap* map = new TileMap(width, height, 32, grid);
   return map;
 }
+
+void DataLoader::loadStateData(string path) {
+  ifstream s(path);
+
+  string content = "";
+  string line;
+  while (getline(s, line)) {
+    std::istringstream iss(line);
+    content += iss.str();
+  }
+
+  Document doc;
+  if (doc.Parse(content.c_str()).HasParseError()) {
+    cout << "Couldn't read tilemap info from json: " << path << "\nerror: " << doc.GetParseError() << endl;
+  }
+
+  if (!doc.IsObject()) {
+    cout << "json does not contain an object" << endl;
+    return;
+  }
+
+  bool error(false);
+  if (!doc.HasMember("ressources")) {
+    cout << "json doesn't contains tilemap info" << endl;
+    error = true;
+  }
+    
+  if (!doc.HasMember("entities")) {
+    cout << "json doesn't contains tilemap info" << endl;
+    error = true;
+  }
+  
+  if (error) return;
+
+  const Value& ressources = doc["ressources"];
+  const Value& entities = doc["entities"];
+
+  // parse everything calling private methods and store data
+}
