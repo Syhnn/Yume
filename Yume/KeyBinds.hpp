@@ -58,12 +58,13 @@ public:
 
   void bindKeyDown(Key k, cfunc f);
   void bindKeyUp(Key k, cfunc f);
-  void unbind(int k);
+  void unbindKeyDown(Key k);
+  void unbindKeyUp(Key k);
 
 private:
   std::vector<int> kp;
-  std::map<int, cfunc> commands_up;
-  std::map<int, cfunc> commands_down;
+  std::map<int, cfunc> key_up;
+  std::map<int, cfunc> key_down;
 };
 
 #endif // _KEY_BINDS_HPP_

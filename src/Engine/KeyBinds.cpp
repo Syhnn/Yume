@@ -18,25 +18,29 @@ void KeyBinds::handleInputs(Engine* engine) {
     if (e.type == SDL_QUIT) {
       engine->exit();
     } else if (e.type == SDL_KEYDOWN && !e.key.repeat) {
-      if (commands_down.find(e.key.keysym.sym) != commands_down.end()) {
-        commands_down[e.key.keysym.sym]();
+      if (key_down.find(e.key.keysym.sym) != key_down.end()) {
+        key_down[e.key.keysym.sym]();
       }
     } else if (e.type == SDL_KEYUP && !e.key.repeat) {
-      if (commands_up.find(e.key.keysym.sym) != commands_up.end()) {
-        commands_up[e.key.keysym.sym]();
+      if (key_up.find(e.key.keysym.sym) != key_up.end()) {
+        key_up[e.key.keysym.sym]();
       }
     }
   }
 }
 
-void KeyBinds::bindKeyUp(Key k, cfunc f) {
-  commands_up[k] = f;
-}
-
 void KeyBinds::bindKeyDown(Key k, cfunc f) {
-  commands_down[k] = f;
+  key_down[k] = f;
 }
 
-void KeyBinds::unbind(int k) {
-  commands_down.erase(k);
+void KeyBinds::bindKeyUp(Key k, cfunc f) {
+  key_up[k] = f;
+}
+
+void KeyBinds::unbindKeyDown(Key k) {
+  key_down.erase(k);
+}
+
+void KeyBinds::unbindKeyUp(Key k) {
+  key_up.erase(k);
 }
