@@ -12,7 +12,43 @@ typedef void (*cfunc)(void);
 
 
 enum Key {
-  A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+  A = 'a',
+  B = 'b',
+  C = 'c',
+  D = 'd',
+  E = 'e',
+  F = 'f',
+  G = 'g',
+  H = 'h',
+  I = 'i',
+  J = 'j',
+  K = 'k',
+  L = 'l',
+  M = 'm',
+  N = 'n',
+  O = 'o',
+  P = 'p',
+  Q = 'q',
+  R = 'r',
+  S = 's',
+  T = 't',
+  U = 'u',
+  V = 'v',
+  W = 'w',
+  X = 'x',
+  Y = 'y',
+  Z = 'z',
+
+  NUM_0 = '0',
+  NUM_1 = '1',
+  NUM_2 = '2',
+  NUM_3 = '3',
+  NUM_4 = '4',
+  NUM_5 = '5',
+  NUM_6 = '6',
+  NUM_7 = '7',
+  NUM_8 = '8',
+  NUM_9 = '9'
 };
 
 
