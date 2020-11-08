@@ -1,6 +1,8 @@
 #ifndef _ENTITY_HPP_
 #define _ENTITY_HPP_
 
+#include <string>
+
 
 class Entity {
 public:
@@ -12,6 +14,8 @@ public:
   int posy;
 
   int texture_id;
+
+  std::string name;
 };
 
 #endif // _ENTITY_HPP_

@@ -9,7 +9,8 @@ using namespace std;
 Entity::Entity() :
   posx(0),
   posy(0),
-  texture_id(-1)
+  texture_id(-1),
+  name("")
 {}
 
 // Public methods

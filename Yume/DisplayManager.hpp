@@ -46,6 +46,7 @@ public:
   void renderClip(std::string texture_name, int x, int y, int clip) const;
   void renderTileMap(std::string texture_name, int x, int y, const TileMap* const t) const;
 
+  int getTextureId(std::string texture_name);
   void defineNameForTexture(std::string texture_name, int id);
   void deleteTextureName(std::string texture_name);
   void deleteAllTextureNames(int id);

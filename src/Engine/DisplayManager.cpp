@@ -219,6 +219,13 @@ void DisplayManager::renderTileMap(std::string texture_name, int x, int y, const
   }
 }
 
+int DisplayManager::getTextureId(string texture_name) {
+  if (texture_names.find(texture_name) != texture_names.end()) {
+    return texture_names[texture_name];
+  }
+  return -1;
+}
+
 void DisplayManager::defineNameForTexture(std::string texture_name, int id) {
   if (texture_names.find(texture_name) == texture_names.end()) {
     if (id < 0 && id >= loaded_textures.size()) {
