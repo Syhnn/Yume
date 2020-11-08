@@ -2,6 +2,7 @@
 #define _DISPLAY_MANAGER_HPP_
 
 #include <cstdint>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -28,7 +29,7 @@ public:
   void clear() const;
   void render() const;
 
-  void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xff) const;
+  void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xff);
   void setClearColor(uint8_t r, uint8_t g, uint8_t b);
   void drawPoint(float x, float y) const;
   void drawLine(float x1, float y1, float x2, float y2) const;
@@ -40,6 +41,14 @@ public:
   void renderTexture(int id, int x, int y) const;
   void renderClip(int id, int x, int y, int clip) const;
   void renderTileMap(int id, int x, int y, const TileMap* const t) const;
+
+  void renderTexture(std::string texture_name, int x, int y) const;
+  void renderClip(std::string texture_name, int x, int y, int clip) const;
+  void renderTileMap(std::string texture_name, int x, int y, const TileMap* const t) const;
+
+  void defineNameForTexture(std::string texture_name, int id);
+  void deleteTextureName(std::string texture_name);
+  void deleteAllTextureNames(int id);
 
   int loadText(std::string text);
 
@@ -58,6 +67,7 @@ private:
   Texture* buffer_texture;
 
   std::vector<Texture*> loaded_textures;
+  std::map<std::string, int> texture_names;
 
   TTF_Font* font;
 };

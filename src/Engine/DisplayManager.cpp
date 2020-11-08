@@ -89,7 +89,7 @@ void DisplayManager::render() const {
   SDL_RenderPresent(renderer);
 }
 
-void DisplayManager::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) const {
+void DisplayManager::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
   SDL_SetRenderDrawColor(renderer, r, g, b, a);
 }
 
@@ -191,6 +191,53 @@ void DisplayManager::renderTileMap(int id, int x, int y, const TileMap* const t)
         SDL_Rect r = { x + i * tile_size, y + j * tile_size, tile_size, tile_size };
         SDL_RenderCopy(renderer, loaded_textures[id]->getRawTexture(), loaded_textures[id]->getClip(clip), &r);
       }
+    }
+  }
+}
+
+void DisplayManager::renderTexture(std::string texture_name, int x, int y) const {
+  if (texture_names.find(texture_name) != texture_names.end()) {
+    renderTexture(texture_names.at(texture_name), x, y);
+  } else {
+    cout << "Couldn't find texture with name " << texture_name << endl;
+  }
+}
+
+void DisplayManager::renderClip(std::string texture_name, int x, int y, int clip) const {
+  if (texture_names.find(texture_name) != texture_names.end()) {
+    renderClip(texture_names.at(texture_name), x, y, clip);
+  } else {
+    cout << "Couldn't find texture with name " << texture_name << endl;
+  }
+}
+
+void DisplayManager::renderTileMap(std::string texture_name, int x, int y, const TileMap* const t) const {
+  if (texture_names.find(texture_name) != texture_names.end()) {
+    renderTileMap(texture_names.at(texture_name), x, y, t);
+  } else {
+    cout << "Couldn't find texture with name " << texture_name << endl;
+  }
+}
+
+void DisplayManager::defineNameForTexture(std::string texture_name, int id) {
+  if (texture_names.find(texture_name) == texture_names.end()) {
+    if (id < 0 && id >= loaded_textures.size()) {
+      cout << "Warning : id unknown" << endl;
+    }
+    texture_names[texture_name] = id;
+  } else {
+    cout << "Texture name already exists" << endl;
+  }
+}
+
+void DisplayManager::deleteTextureName(std::string texture_name) {
+  texture_names.erase(texture_name);
+}
+
+void DisplayManager::deleteAllTextureNames(int id) {
+  for (auto it : texture_names) {
+    if (it.second == id) {
+      texture_names.erase(it.first);
     }
   }
 }
